@@ -1,10 +1,10 @@
-import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 import PrimeVideoLogo from "../../assets/prime_video.png";
 import AmazonLogo from "../../assets/amazon_logo.png";
 import MovieTheWhell from "../../assets/movies/the_wheel_of_time.png";
-import MovieWhell from "../../assets/movies/wheel_of_time.png";
-import MovieInception from "../../assets/movies/inception.png";
+import { MOVIESWATCHING } from "../../utils/moviesWatching";
+import { MoviesCard } from "../../components/MoviesCard";
 
 export function Home(){
     return (
@@ -30,19 +30,14 @@ export function Home(){
             <TouchableOpacity style={styles.movieImagemMain}>
                 <Image source={MovieTheWhell} />
             </TouchableOpacity>
-            <View>
-                <Text style={styles.watchingText}>Continue Watching</Text>
-                <View style={styles.movieWatching}>
-                    <TouchableOpacity>
-                        <Image source={MovieWhell}/>
-                    </TouchableOpacity>
-                    <TouchableOpacity>
-                        <Image source={MovieInception}/>
-                    </TouchableOpacity>
-                    
-                </View>
-            </View>
-            
+            <FlatList 
+                data={MOVIESWATCHING}
+                keyExtractor={(item) => item.id}
+                renderItem={({ item }) => <MoviesCard movieURL={item.moviesURL}/>}
+                horizontal
+                contentContainerStyle={styles.contentList}
+                showsHorizontalScrollIndicator={false}
+            />
         </View>
     );
 }
@@ -79,16 +74,4 @@ const styles = StyleSheet.create({
         width: "100%",
         alignItems: "center",
     },
-    watchingText: {
-        color: "#fff",
-        fontSize: 18,
-        fontWeight: "700",
-        marginTop: 10,
-        marginLeft: 10,
-    },
-    movieWatching: {
-        flexDirection: "row",
-        justifyContent: "space-evenly",
-        paddingTop: 10,
-    }
 });
